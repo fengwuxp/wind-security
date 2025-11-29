@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.wind.middleware</groupId>
+        <artifactId>wind-middleware</artifactId>
+        <version>1.0.2-jdk21-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.wind.security</groupId>
+    <artifactId>wind-security</artifactId>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <revision>1.0.2-jdk21-SNAPSHOT</revision>
+        <java.version>21</java.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <modules>
+        <module>authentication</module>
+        <module>captcha</module>
+        <module>core</module>
+        <module>mfa</module>
+        <module>jwt</module>
+        <module>tests</module>
+        <module>dependencies</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.wind.security</groupId>
+                <artifactId>wind-security-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wind.security</groupId>
+                <artifactId>wind-security-captcha</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wind.security</groupId>
+                <artifactId>wind-security-authentication</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wind.security</groupId>
+                <artifactId>wind-security-jwt</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wind.security</groupId>
+                <artifactId>wind-security-mfa</artifactId>
+                <version>${revision}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+    <organization>
+        <name>Wuxp</name>
+        <url>https://github.com/fengwuxp</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <id>fengwuxp</id>
+        </developer>
+    </developers>
+</project>
