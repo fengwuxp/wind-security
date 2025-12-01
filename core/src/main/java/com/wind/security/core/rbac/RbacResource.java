@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
  * @author wuxp
  * @date 2023-09-26 07:41
  **/
+@Deprecated
 public interface RbacResource extends Serializable {
 
     /**

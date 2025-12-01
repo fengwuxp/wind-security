@@ -10,6 +10,8 @@ import java.util.Collections;
 import java.util.Objects;
 
 /**
+ * 简单的权限操作实现
+ *
  * @param rolePrefix 默认的角色值前缀
  * @author wuxp
  * @date 2023-10-24 08:06

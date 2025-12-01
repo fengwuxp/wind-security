@@ -36,6 +36,11 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>com.wind.integration</groupId>
+                <artifactId>wind-integration-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.wind.security</groupId>
                 <artifactId>wind-security-core</artifactId>
                 <version>${revision}</version>

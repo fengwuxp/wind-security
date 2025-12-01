@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
  * @date 2023-09-26 09:57
  **/
 @Getter
+@Deprecated
 public class RbacResourceChangeEvent extends ApplicationEvent {
 
     @Serial
