@@ -14,12 +14,12 @@ import java.util.Map;
  * Authentication User
  *
  * @param id         用户 id
- * @param userName   用户名
+ * @param username   用户名
  * @param attributes 用户属性
  * @author wuxp
  * @date 2023-10-26 12:49
  */
-public record WindAuthenticationUser(String id, String userName, Map<String, Object> attributes) implements Serializable {
+public record WindAuthenticationUser(String id, String username, Map<String, Object> attributes) implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -7270843983936135796L;
