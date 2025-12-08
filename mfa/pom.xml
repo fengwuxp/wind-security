@@ -28,6 +28,18 @@
             <groupId>com.google.zxing</groupId>
             <artifactId>javase</artifactId>
         </dependency>
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.wind.middleware</groupId>
+            <artifactId>wind-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.wind.middleware</groupId>
+            <artifactId>wind-sentinel</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

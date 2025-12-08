@@ -10,13 +10,15 @@ import java.io.Serial;
 import java.util.Collection;
 
 /**
+ * MFA认证令牌
+ *
  * @author wuxp
  * @date 2024-03-05 15:06
  **/
 @Getter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class MfaAuthenticationToken extends AbstractAuthenticationToken {
+public class MultiFactorAuthenticationToken extends AbstractAuthenticationToken {
 
     @Serial
     private static final long serialVersionUID = 7810089624358947844L;
@@ -25,14 +27,14 @@ public class MfaAuthenticationToken extends AbstractAuthenticationToken {
 
     private final transient Object credentials;
 
-    public MfaAuthenticationToken(Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {
+    public MultiFactorAuthenticationToken(Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.principal = principal;
         this.credentials = credentials;
         setAuthenticated(true);
     }
 
-    public MfaAuthenticationToken(Object principal, Object credentials) {
+    public MultiFactorAuthenticationToken(Object principal, Object credentials) {
         super((Collection<? extends GrantedAuthority>) null);
         this.principal = principal;
         this.credentials = credentials;

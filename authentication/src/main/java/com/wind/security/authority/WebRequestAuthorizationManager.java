@@ -45,8 +45,7 @@ public record WebRequestAuthorizationManager(WebRequestAuthorityLoader webReques
             return ACCESS_PASSED;
         }
         if (log.isDebugEnabled()) {
-            log.debug("request resource ={} {}, require authorities = {}", context.getRequest().getMethod(), context.getRequest().getRequestURI(),
-                    authorities);
+            log.debug("request {} {}, require authorities = {}", context.getRequest().getMethod(), context.getRequest().getRequestURI(), authorities);
         }
         context.getRequest().setAttribute(REQUEST_REQUIRED_AUTHORITIES_ATTRIBUTE_NAME, authorities);
         return securityAccessOperations.hasAnyAuthority(authorities.toArray(new String[0])) ? ACCESS_PASSED : ACCESS_DENIED;

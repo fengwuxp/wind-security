@@ -1,4 +1,4 @@
-package com.wind.security.mfa;
+package com.wind.security.mfa.totp;
 
 /**
  * Time-based One-time Password(基于时间的一次性密码) 认证服务

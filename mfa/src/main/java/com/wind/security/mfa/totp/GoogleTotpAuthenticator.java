@@ -1,4 +1,4 @@
-package com.wind.security.mfa;
+package com.wind.security.mfa.totp;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;

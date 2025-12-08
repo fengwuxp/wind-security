@@ -1,28 +1,28 @@
-package com.wind.security.fas;
+package com.wind.security.mfa;
 
 import com.wind.common.enums.DescriptiveEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 二次认证类型
+ * MFA 认证类型
  *
  * @author wuxp
  * @date 2025-02-08 15:07
  */
 @AllArgsConstructor
 @Getter
-public enum FasAuthenticationType implements DescriptiveEnum {
+public enum MultiFactorAuthenticationType implements DescriptiveEnum {
 
     /**
-     * MFA
+     * 2fas
      */
-    MFA("2FAS"),
+    SECOND_FAS("2FAS"),
 
     /**
      * 验证码
      */
-    MOBILE("短信"),
+    SMS("短信"),
 
     /**
      * 邮箱

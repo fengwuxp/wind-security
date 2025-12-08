@@ -3,6 +3,8 @@ package com.wind.security.mfa;
 import com.warrenstrange.googleauth.ICredentialRepository;
 import com.wind.common.WindConstants;
 import com.wind.common.exception.AssertUtils;
+import com.wind.security.mfa.totp.GoogleTotpAuthenticator;
+import com.wind.security.mfa.totp.TotpAuthenticator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
