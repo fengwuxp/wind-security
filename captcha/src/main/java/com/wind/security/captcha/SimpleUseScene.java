@@ -21,7 +21,14 @@ public enum SimpleUseScene implements Captcha.CaptchaUseScene {
 
     BIND_MOBILE_PHONE("绑定手机"),
 
+    UNBIND_MOBILE_PHONE("解绑手机"),
+
+    CHANGE_MOBILE_PHONE("修改手机"),
+
     BIND_EMAIL("绑定邮箱"),
+
+    UNBIND_EMAIL("解绑邮箱"),
+    CHANGE_EMAIL("修改邮箱"),
 
     /**
      * 例如：实名认证等场景
