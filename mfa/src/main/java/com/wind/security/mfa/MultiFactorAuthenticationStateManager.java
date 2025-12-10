@@ -5,6 +5,7 @@ import com.wind.security.mfa.request.MultiFactorAuthenticationOwnerKey;
 import jakarta.validation.constraints.NotNull;
 import org.jspecify.annotations.Nullable;
 
+import java.io.Serializable;
 import java.time.Duration;
 
 /**
@@ -38,6 +39,17 @@ public interface MultiFactorAuthenticationStateManager {
      * @param ownerKey 认证用户标识
      */
     void unAuthenticate(@NotNull MultiFactorAuthenticationOwnerKey ownerKey);
+
+    /**
+     * 是否认证
+     *
+     * @param userId 用户 ID
+     * @param scene  认证场景
+     * @return true:已认证
+     */
+    default boolean isAuthenticated(@NotNull Serializable userId, @NotNull String scene) {
+        return isAuthenticated(MultiFactorAuthenticationOwnerKey.of(userId, scene));
+    }
 
     /**
      * 是否认证

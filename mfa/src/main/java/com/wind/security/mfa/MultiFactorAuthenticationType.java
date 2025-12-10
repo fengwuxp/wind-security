@@ -15,9 +15,9 @@ import lombok.Getter;
 public enum MultiFactorAuthenticationType implements DescriptiveEnum {
 
     /**
-     * 2fas
+     * totp
      */
-    SECOND_FAS("2FAS"),
+    TOTP("TOTP"),
 
     /**
      * 验证码

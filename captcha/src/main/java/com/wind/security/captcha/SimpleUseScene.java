@@ -28,6 +28,7 @@ public enum SimpleUseScene implements Captcha.CaptchaUseScene {
     BIND_EMAIL("绑定邮箱"),
 
     UNBIND_EMAIL("解绑邮箱"),
+
     CHANGE_EMAIL("修改邮箱"),
 
     /**

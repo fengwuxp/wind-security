@@ -1,14 +1,11 @@
 package com.wind.security.mfa.aop;
 
-import com.alibaba.csp.sentinel.EntryType;
 import com.wind.common.exception.AssertUtils;
 import com.wind.security.mfa.MultiFactorAuthenticationStateManager;
 import com.wind.security.mfa.MultiFactorAuthenticationType;
 import com.wind.security.mfa.MultiFactorAuthenticator;
 import com.wind.security.mfa.request.MultiFactorAuthenticationOwnerKey;
 import com.wind.security.mfa.request.MultiFactorAuthenticationRequest;
-import com.wind.sentinel.DefaultSentinelResource;
-import com.wind.sentinel.SentinelResource;
 import com.wind.sentinel.util.SentinelFlowLimitUtils;
 import com.wind.web.util.HttpServletRequestUtils;
 import com.wind.web.util.HttpTraceVariableUtils;
@@ -17,13 +14,14 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.jspecify.annotations.NonNull;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
 import java.util.function.Supplier;
+
+import static com.wind.security.mfa.MfaConstants.MFA_CODE_HEADER_NAME;
+import static com.wind.security.mfa.MfaConstants.MFA_TYPE_HEADER_NAME;
+import static com.wind.security.mfa.MfaConstants.createMfaResource;
 
 /**
  * 多因子认证方法拦截器，需要再 web 上下文中使用
@@ -34,16 +32,6 @@ import java.util.function.Supplier;
 @Slf4j
 @AllArgsConstructor
 public class MultiFactorAuthenticationMethodInterceptor implements MethodInterceptor {
-
-    /**
-     * MFA 验证码请求头名称
-     */
-    private static final String MFA_CODE_HEADER_NAME = "Maf-Code";
-
-    /**
-     * MFA 验证类型请求头名称
-     */
-    private static final String MFA_TYPE_HEADER_NAME = "Maf-Type";
 
     private final MultiFactorAuthenticator authenticator;
 
@@ -66,7 +54,7 @@ public class MultiFactorAuthenticationMethodInterceptor implements MethodInterce
         String scene = authentication.value();
         log.debug("Required multi factor authentication userId = {}, scene = {}", userId, scene);
 
-        SentinelFlowLimitUtils.limit(buildLimitResource(userId), () -> {
+        SentinelFlowLimitUtils.limit(createMfaResource(userId), () -> {
             MultiFactorAuthenticationOwnerKey ownerKey = MultiFactorAuthenticationOwnerKey.builder()
                     .userId(userId)
                     .scene(scene)
@@ -84,25 +72,11 @@ public class MultiFactorAuthenticationMethodInterceptor implements MethodInterce
                         .mfaType(MultiFactorAuthenticationType.valueOf(mfaType))
                         .scene(scene)
                         .build();
-                AssertUtils.isTrue(authenticator.verify(fasAuthenticationRequest), "MFA验证码错误");
+                AssertUtils.isTrue(authenticator.verify(fasAuthenticationRequest), "MFA 验证码错误");
                 authenticationStateManager.authenticate(ownerKey);
             }
         });
     }
 
-    @NonNull
-    private static SentinelResource buildLimitResource(Serializable userId) {
-        DefaultSentinelResource result = new DefaultSentinelResource();
-        result.setName(MultiFactorAuthentication.class.getName());
-        result.setResourceType(40401);
-        result.setContextName(MultiFactorAuthenticationMethodInterceptor.class.getName());
-        result.setOrigin(HttpTraceVariableUtils.getRequestSourceIp());
-        result.setEntryType(EntryType.IN);
-        result.setArgs(List.of(
-                userId,
-                Objects.requireNonNull(HttpTraceVariableUtils.getRequestSourceIp()),
-                Objects.requireNonNull(HttpTraceVariableUtils.getRequestDeviceId())
-        ));
-        return result;
-    }
+
 }
