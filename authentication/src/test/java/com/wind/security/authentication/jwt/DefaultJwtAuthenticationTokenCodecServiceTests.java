@@ -1,5 +1,6 @@
 package com.wind.security.authentication.jwt;
 
+import com.wind.common.WindHttpConstants;
 import com.wind.common.exception.BaseException;
 import com.wind.security.authentication.AuthenticationTokenCodecService;
 import com.wind.security.authentication.AuthenticationTokenUserMap;
@@ -33,10 +34,19 @@ class DefaultJwtAuthenticationTokenCodecServiceTests {
     }
 
     @Test
+    void testGenerateTokenWithBearer() {
+        WindAuthenticationToken token = tokenCodecService.generateToken(new WindAuthenticationUser(1L, RandomStringUtils.secure().nextAlphabetic(12)));
+        WindAuthenticationToken parsed = tokenCodecService.parseAndValidateToken(WindHttpConstants.API_TOKEN_BEARER_PREFIX + token.tokenValue());
+        Assertions.assertEquals(token.id(), parsed.id());
+        Assertions.assertEquals(token.subject(), parsed.subject());
+    }
+
+    @Test
     void testParseAndValidateTokenWithException() {
         WindAuthenticationToken token = tokenCodecService.generateToken(new WindAuthenticationUser(1L, RandomStringUtils.secure().nextAlphabetic(12)));
         tokenUserMap.removeTokenId(token.subject());
-        BaseException exception = Assertions.assertThrows(BaseException.class, () -> tokenCodecService.parseAndValidateToken(token.tokenValue()));
+        String accessToken = token.tokenValue();
+        BaseException exception = Assertions.assertThrows(BaseException.class, () -> tokenCodecService.parseAndValidateToken(accessToken));
         Assertions.assertEquals("invalid access token user", exception.getMessage());
     }
 
@@ -52,13 +62,13 @@ class DefaultJwtAuthenticationTokenCodecServiceTests {
     void testParseAndValidateRefreshTokenWithException() {
         WindAuthenticationToken token = tokenCodecService.generateRefreshToken("1");
         tokenCodecService.revokeAllToken(token.subject());
-        BaseException exception = Assertions.assertThrows(BaseException.class,
-                () -> tokenCodecService.parseAndValidateRefreshToken(token.tokenValue()));
+        String refreshToken = token.tokenValue();
+        BaseException exception = Assertions.assertThrows(BaseException.class, () -> tokenCodecService.parseAndValidateRefreshToken(refreshToken));
         Assertions.assertEquals("invalid refresh token user", exception.getMessage());
     }
 
     private AuthenticationTokenCodecService createCodeService(AuthenticationTokenUserMap tokenStore) {
-        JwtTokenCodec tokenCodec =  JwtTokenCodecTests.createCodec(JwtTokenCodecTests.jwtProperties(Duration.ofHours(1)));
+        JwtTokenCodec tokenCodec = JwtTokenCodecTests.createCodec(JwtTokenCodecTests.jwtProperties(Duration.ofHours(1)));
         return new DefaultJwtAuthenticationTokenCodecService(tokenCodec, tokenStore);
     }
 

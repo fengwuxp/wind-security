@@ -1,6 +1,7 @@
 package com.wind.security.authentication.jwt;
 
 import com.wind.common.WindConstants;
+import com.wind.common.WindHttpConstants;
 import com.wind.common.exception.AssertUtils;
 import com.wind.security.authentication.AuthenticationTokenCodecService;
 import com.wind.security.authentication.AuthenticationTokenUserMap;
@@ -49,6 +50,9 @@ public class DefaultJwtAuthenticationTokenCodecService implements Authentication
 
     @Override
     public WindAuthenticationToken parseAndValidateToken(String accessToken) {
+        if (accessToken.startsWith(WindHttpConstants.API_TOKEN_BEARER_PREFIX)) {
+            accessToken = accessToken.substring(WindHttpConstants.API_TOKEN_BEARER_PREFIX.length());
+        }
         WindAuthenticationToken result = jwtTokenCodec.parse(accessToken);
         String tokenId = userTokenMap.getTokenId(result.subject());
         AssertUtils.hasText(tokenId, "invalid access token user");

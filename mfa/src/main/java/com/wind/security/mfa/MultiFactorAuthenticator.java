@@ -5,7 +5,12 @@ import com.wind.security.mfa.request.MultiFactorAuthenticationRequest;
 import org.jspecify.annotations.NonNull;
 
 
-
+/**
+ * 多因子认证服务
+ *
+ * @author wuxp
+ * @date 2025-12-08 10:39
+ **/
 public interface MultiFactorAuthenticator {
 
     /**

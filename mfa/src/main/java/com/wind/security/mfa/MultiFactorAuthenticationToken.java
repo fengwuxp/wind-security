@@ -10,7 +10,7 @@ import java.io.Serial;
 import java.util.Collection;
 
 /**
- * MFA认证令牌
+ * MFA 认证令牌
  *
  * @author wuxp
  * @date 2024-03-05 15:06
