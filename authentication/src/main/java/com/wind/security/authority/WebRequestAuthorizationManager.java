@@ -2,8 +2,10 @@ package com.wind.security.authority;
 
 import com.wind.security.core.WindSecurityAccessOperations;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.Nullable;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
+import org.springframework.security.authorization.AuthorizationResult;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 import org.springframework.util.ObjectUtils;
@@ -28,8 +30,9 @@ public record WebRequestAuthorizationManager(WebRequestAuthorityLoader webReques
     private static final AuthorizationDecision ACCESS_DENIED = new AuthorizationDecision(false);
 
     @Override
-    public AuthorizationDecision check(Supplier<Authentication> supplier, RequestAuthorizationContext context) {
-        if (!supplier.get().isAuthenticated()) {
+    public @Nullable AuthorizationResult authorize(Supplier<? extends @Nullable Authentication> supplier, RequestAuthorizationContext context) {
+        Authentication authentication = supplier.get();
+        if (authentication == null || !authentication.isAuthenticated()) {
             // 未登录
             return ACCESS_PASSED;
         }
@@ -50,4 +53,5 @@ public record WebRequestAuthorizationManager(WebRequestAuthorityLoader webReques
         context.getRequest().setAttribute(REQUEST_REQUIRED_AUTHORITIES_ATTRIBUTE_NAME, authorities);
         return securityAccessOperations.hasAnyAuthority(authorities.toArray(new String[0])) ? ACCESS_PASSED : ACCESS_DENIED;
     }
+
 }
