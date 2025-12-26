@@ -61,7 +61,7 @@ public record DefaultCaptchaManager(Collection<CaptchaContentGenerator> delegate
         AssertUtils.notNull(useScene, "argument useScene must not empty");
         AssertUtils.hasText(owner, "argument owner must not empty");
         // 检查是否允许生成验证码
-        String realOwner = owner.trim();
+        String realOwner = owner.trim().toLowerCase();
         if (ALLOW_USE_PREVIOUS_CAPTCHA_TYPES.contains(type)) {
             // 允许在未失效之前允许重复发送
             Captcha prevCaptcha = captchaStorage.get(type, useScene, realOwner);
@@ -102,7 +102,7 @@ public record DefaultCaptchaManager(Collection<CaptchaContentGenerator> delegate
         AssertUtils.notNull(type, "argument type must not empty");
         AssertUtils.notNull(useScene, "argument useScene must not empty");
         AssertUtils.hasText(owner, "argument owner must not empty");
-        String realOwner = owner.trim();
+        String realOwner = owner.trim().toLowerCase();
         Captcha captcha = captchaStorage.get(type, useScene, realOwner);
         AssertUtils.notNull(captcha, CaptchaI18nMessageKeys.getCaptchaNotExistOrExpired(type));
         AssertUtils.isTrue(captcha.isAvailable(), () -> {
