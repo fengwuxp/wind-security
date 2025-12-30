@@ -51,9 +51,19 @@ public interface WindSecurityAccessOperations {
     boolean hasAnyRole(String... roles);
 
     /**
+     * TODO 单词拼写错误，待移除
+     *
      * @return 是否为超级管理员
      */
+    @Deprecated(forRemoval = true)
     default boolean isSupperAdmin() {
+        return isSuperAdmin();
+    }
+
+    /**
+     * @return 是否为超级管理员
+     */
+    default boolean isSuperAdmin() {
         return hasAnyRole(SUPER_ADMIN_ROLE_NAME);
     }
 
