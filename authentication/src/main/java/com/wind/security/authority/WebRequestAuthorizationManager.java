@@ -33,7 +33,7 @@ public record WebRequestAuthorizationManager(WebRequestAuthorityLoader webReques
             // 未登录
             return ACCESS_PASSED;
         }
-        if (securityAccessOperations.isSupperAdmin()) {
+        if (securityAccessOperations.isSuperAdmin()) {
             // 超级管理员
             log.debug("supper admin, allow access");
             return ACCESS_PASSED;
