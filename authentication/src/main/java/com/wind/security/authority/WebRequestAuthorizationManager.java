@@ -22,12 +22,12 @@ import static com.wind.security.WebSecurityConstants.REQUEST_REQUIRED_AUTHORITIE
  * @date 2023-10-23 08:52
  **/
 @Slf4j
-public record WebRequestAuthorizationManager(WebRequestAuthorityLoader webRequestAuthorityLoader,
-                                             WindSecurityAccessOperations securityAccessOperations) implements AuthorizationManager<RequestAuthorizationContext> {
+public record WebRequestAuthorizationManager(WebRequestAuthorityLoader webRequestAuthorityLoader, WindSecurityAccessOperations securityAccessOperations)
+        implements AuthorizationManager<RequestAuthorizationContext> {
 
-    private static final AuthorizationDecision ACCESS_PASSED = new AuthorizationDecision(true);
+    private static final AuthorizationResult ACCESS_PASSED = new AuthorizationDecision(true);
 
-    private static final AuthorizationDecision ACCESS_DENIED = new AuthorizationDecision(false);
+    private static final AuthorizationResult ACCESS_DENIED = new AuthorizationDecision(false);
 
     @Override
     public @Nullable AuthorizationResult authorize(Supplier<? extends @Nullable Authentication> supplier, RequestAuthorizationContext context) {
@@ -53,5 +53,4 @@ public record WebRequestAuthorizationManager(WebRequestAuthorityLoader webReques
         context.getRequest().setAttribute(REQUEST_REQUIRED_AUTHORITIES_ATTRIBUTE_NAME, authorities);
         return securityAccessOperations.hasAnyAuthority(authorities.toArray(new String[0])) ? ACCESS_PASSED : ACCESS_DENIED;
     }
-
 }
