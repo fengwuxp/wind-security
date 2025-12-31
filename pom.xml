@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.wind.middleware</groupId>
         <artifactId>wind-middleware</artifactId>
-        <version>1.0.3-jdk21-SNAPSHOT</version>
+        <version>1.10.0-jdk21-SNAPSHOT</version>
     </parent>
 
     <groupId>com.wind.security</groupId>
@@ -15,7 +15,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <revision>1.0.3-jdk21-SNAPSHOT</revision>
+        <revision>1.10.0-jdk21-SNAPSHOT</revision>
     </properties>
 
     <modules>
@@ -30,6 +30,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.wind.integration</groupId>
+                <artifactId>wind-integration-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
             <dependency>
                 <groupId>com.wind.security</groupId>
                 <artifactId>wind-security-core</artifactId>
