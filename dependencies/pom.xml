@@ -17,27 +17,27 @@
             <dependency>
                 <groupId>com.wind.security</groupId>
                 <artifactId>wind-security-core</artifactId>
-                <version>${revision}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.wind.security</groupId>
                 <artifactId>wind-security-captcha</artifactId>
-                <version>${revision}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.wind.security</groupId>
                 <artifactId>wind-security-authentication</artifactId>
-                <version>${revision}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.wind.security</groupId>
                 <artifactId>wind-security-jwt</artifactId>
-                <version>${revision}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.wind.security</groupId>
                 <artifactId>wind-security-mfa</artifactId>
-                <version>${revision}</version>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
