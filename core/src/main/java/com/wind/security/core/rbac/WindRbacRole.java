@@ -1,6 +1,7 @@
 package com.wind.security.core.rbac;
 
-import com.wind.integration.core.resources.WindResources;
+
+import com.wind.core.resources.WindResources;
 import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serializable;
