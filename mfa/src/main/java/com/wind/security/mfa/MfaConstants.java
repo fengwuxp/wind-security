@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * MFA 常量
+ *
  * @author wuxp
  * @date 2025-12-10 16:05
  **/
