@@ -4,6 +4,7 @@ import com.wind.security.authentication.WindAuthenticationToken;
 import com.wind.security.authentication.WindAuthenticationUser;
 import com.wind.security.jwt.JwtExpiredException;
 import com.wind.security.jwt.JwtTokenCodec;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -29,6 +30,7 @@ class JwtTokenCodecTests {
     @Test
     void testCodecUserTokenWithTtlExpired() {
         WindAuthenticationUser user = new WindAuthenticationUser(1L, "");
+        user.putAttribute("jti", RandomStringUtils.secure().nextAlphabetic(32));
         WindAuthenticationToken token = jwtTokenCodec.encoding(user, Duration.ofNanos(1));
         JwtExpiredException exception = Assertions.assertThrows(JwtExpiredException.class, () -> jwtTokenCodec.parse(token.tokenValue()));
         Assertions.assertEquals("token is expired", exception.getMessage());

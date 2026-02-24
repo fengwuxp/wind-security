@@ -1,19 +1,19 @@
 package com.wind.security.authentication.jwt;
 
 import com.wind.common.WindHttpConstants;
+import com.wind.common.enums.WindClientDeviceType;
 import com.wind.common.exception.BaseException;
 import com.wind.security.authentication.AuthenticationTokenCodecService;
-import com.wind.security.authentication.AuthenticationTokenUserMap;
+import com.wind.security.authentication.AuthenticationTokenUserMapFactory;
 import com.wind.security.authentication.WindAuthenticationToken;
 import com.wind.security.authentication.WindAuthenticationUser;
+import com.wind.security.authentication.CaffeineAuthenticationTokenUserMapFactory;
 import com.wind.security.jwt.JwtTokenCodec;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author wuxp
@@ -21,9 +21,9 @@ import java.util.Map;
  **/
 class DefaultJwtAuthenticationTokenCodecServiceTests {
 
-    private final AuthenticationTokenUserMap tokenUserMap = getTokenUserMap();
+    private final  AuthenticationTokenUserMapFactory factory = createFactory();
 
-    private final AuthenticationTokenCodecService tokenCodecService = createCodeService(tokenUserMap);
+    private final AuthenticationTokenCodecService tokenCodecService = createCodeService(factory);
 
     @Test
     void testGenerateToken() {
@@ -44,7 +44,7 @@ class DefaultJwtAuthenticationTokenCodecServiceTests {
     @Test
     void testParseAndValidateTokenWithException() {
         WindAuthenticationToken token = tokenCodecService.generateToken(new WindAuthenticationUser(1L, RandomStringUtils.secure().nextAlphabetic(12)));
-        tokenUserMap.removeTokenId(token.subject());
+        factory.userToken(WindClientDeviceType.UNKNOWN).removeTokenId(token.subject());
         String accessToken = token.tokenValue();
         BaseException exception = Assertions.assertThrows(BaseException.class, () -> tokenCodecService.parseAndValidateToken(accessToken));
         Assertions.assertEquals("invalid access token user", exception.getMessage());
@@ -67,30 +67,12 @@ class DefaultJwtAuthenticationTokenCodecServiceTests {
         Assertions.assertEquals("invalid refresh token user", exception.getMessage());
     }
 
-    private AuthenticationTokenCodecService createCodeService(AuthenticationTokenUserMap tokenStore) {
+    private AuthenticationTokenCodecService createCodeService(AuthenticationTokenUserMapFactory factory) {
         JwtTokenCodec tokenCodec = JwtTokenCodecTests.createCodec(JwtTokenCodecTests.jwtProperties(Duration.ofHours(1)));
-        return new DefaultJwtAuthenticationTokenCodecService(tokenCodec, tokenStore);
+        return new DefaultJwtAuthenticationTokenCodecService(tokenCodec, factory);
     }
 
-    private AuthenticationTokenUserMap getTokenUserMap() {
-        return new AuthenticationTokenUserMap() {
-
-            private final Map<String, String> caches = new HashMap<>();
-
-            @Override
-            public void put(String userId, String tokenId) {
-                caches.put(userId, tokenId);
-            }
-
-            @Override
-            public String getTokenId(String userId) {
-                return caches.get(userId);
-            }
-
-            @Override
-            public void removeTokenId(String userId) {
-                caches.remove(userId);
-            }
-        };
+    private AuthenticationTokenUserMapFactory createFactory() {
+        return new CaffeineAuthenticationTokenUserMapFactory(new JwtProperties());
     }
 }

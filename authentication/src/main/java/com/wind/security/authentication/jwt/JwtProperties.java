@@ -55,4 +55,9 @@ public class JwtProperties extends AbstractRsaProperties {
      */
     private String rsaPrivateKey;
 
+    /**
+     * 是否允许多设备类型登录
+     */
+    private boolean allowMultiDevicePerType;
+
 }
