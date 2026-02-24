@@ -52,7 +52,7 @@ public class DefaultJwtAuthenticationTokenCodecService implements Authentication
             accessToken = accessToken.substring(WindHttpConstants.API_TOKEN_BEARER_PREFIX.length());
         }
         WindAuthenticationToken result = jwtTokenCodec.parse(accessToken);
-        String tokenId = factory.userToken(parseClientDeviceType()).getTokenId(result.subject());
+        String tokenId = factory.userToken(parseClientDeviceType()).get(result.subject());
         AssertUtils.hasText(tokenId, "invalid access token user");
         AssertUtils.isTrue(Objects.equals(tokenId, result.id()), "invalid access token");
         return result;
@@ -61,7 +61,7 @@ public class DefaultJwtAuthenticationTokenCodecService implements Authentication
     @Override
     public WindAuthenticationToken parseAndValidateRefreshToken(String refreshToken) {
         WindAuthenticationToken result = jwtTokenCodec.parseRefreshToken(refreshToken);
-        String tokenId = factory.refreshToken(parseClientDeviceType()).getTokenId(result.subject());
+        String tokenId = factory.refreshToken(parseClientDeviceType()).get(result.subject());
         AssertUtils.hasText(tokenId, "invalid refresh token user");
         AssertUtils.isTrue(Objects.equals(tokenId, result.id()), "invalid refresh token");
         return result;
@@ -70,11 +70,11 @@ public class DefaultJwtAuthenticationTokenCodecService implements Authentication
     @Override
     public void revokeAllToken(String userId) {
         try {
-            factory.userToken(parseClientDeviceType()).removeTokenId(userId);
+            factory.userToken(parseClientDeviceType()).remove(userId);
         } catch (Exception ignore) {
             // ignore
         }
-        factory.refreshToken(parseClientDeviceType()).removeTokenId(userId);
+        factory.refreshToken(parseClientDeviceType()).remove(userId);
     }
 
     private WindClientDeviceType parseClientDeviceType() {

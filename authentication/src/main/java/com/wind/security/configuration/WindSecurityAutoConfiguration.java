@@ -3,17 +3,16 @@ package com.wind.security.configuration;
 import com.wind.common.locks.JdkLockFactory;
 import com.wind.common.locks.LockFactory;
 import com.wind.security.authentication.AuthenticationTokenCodecService;
-import com.wind.security.authentication.AuthenticationTokenUserMap;
 import com.wind.security.authentication.AuthenticationTokenUserMapFactory;
 import com.wind.security.authentication.WindAuthenticationProperties;
 import com.wind.security.authentication.jwt.DefaultJwtAuthenticationTokenCodecService;
 import com.wind.security.authentication.jwt.JwtProperties;
-import com.wind.security.crypto.RequestParameterEncryptor;
-import com.wind.security.jwt.JwtTokenCodec;
 import com.wind.security.authority.SimpleWindSecurityAccessOperations;
 import com.wind.security.authority.WebRequestAuthorityLoader;
 import com.wind.security.authority.WebRequestAuthorizationManager;
 import com.wind.security.core.WindSecurityAccessOperations;
+import com.wind.security.crypto.RequestParameterEncryptor;
+import com.wind.security.jwt.JwtTokenCodec;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -97,7 +96,7 @@ public class WindSecurityAutoConfiguration {
     }
 
     @Bean
-    public RequestParameterEncryptor authenticationParameterEncryptor(){
+    public RequestParameterEncryptor authenticationParameterEncryptor() {
         return new RequestParameterEncryptor();
     }
 }
