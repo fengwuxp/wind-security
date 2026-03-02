@@ -25,12 +25,12 @@ public final class MfaConstants {
     /**
      * MFA 验证码请求头名称
      */
-    public static final String MFA_CODE_HEADER_NAME = "Maf-Code";
+    public static final String MFA_CODE_HEADER_NAME = "Mfa-Code";
 
     /**
      * MFA 验证类型请求头名称
      */
-    public static final String MFA_TYPE_HEADER_NAME = "Maf-Type";
+    public static final String MFA_TYPE_HEADER_NAME = "Mfa-Type";
 
     @NonNull
     public static SentinelResource createMfaResource(@NonNull Serializable userId) {
