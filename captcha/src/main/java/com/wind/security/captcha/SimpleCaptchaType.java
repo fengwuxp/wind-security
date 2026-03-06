@@ -11,7 +11,10 @@ import lombok.Getter;
 @Getter
 public enum SimpleCaptchaType implements Captcha.CaptchaType {
 
+    @Deprecated(forRemoval = true)
     MOBILE_PHONE("短信验证码"),
+
+    SMS("短信验证码"),
 
     EMAIL("邮箱验证码"),
 
