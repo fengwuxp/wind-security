@@ -58,7 +58,6 @@ public class MultiFactorAuthenticationMethodInterceptor implements MethodInterce
             MultiFactorAuthenticationOwnerKey ownerKey = MultiFactorAuthenticationOwnerKey.builder()
                     .userId(userId)
                     .scene(scene)
-                    .ip(HttpTraceVariableUtils.getRequestSourceIp())
                     .deviceId(HttpTraceVariableUtils.getRequestDeviceId())
                     .build();
             if (!authenticationStateManager.isAuthenticated(ownerKey)) {

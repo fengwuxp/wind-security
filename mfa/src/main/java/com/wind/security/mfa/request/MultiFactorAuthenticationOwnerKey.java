@@ -1,5 +1,6 @@
 package com.wind.security.mfa.request;
 
+import com.wind.common.WindConstants;
 import com.wind.common.exception.AssertUtils;
 import com.wind.trace.WindTracer;
 import jakarta.validation.constraints.NotNull;
@@ -10,7 +11,6 @@ import org.jspecify.annotations.Nullable;
 import java.io.Serializable;
 
 import static com.wind.common.WindHttpConstants.HTTP_REQUEST_CLIENT_ID_HEADER_NAME;
-import static com.wind.common.WindHttpConstants.HTTP_REQUEST_IP_ATTRIBUTE_NAME;
 
 /**
  * MFA 认证用户密钥
@@ -32,7 +32,7 @@ public record MultiFactorAuthenticationOwnerKey(@NotNull Serializable userId, @N
 
     @NonNull
     public String getKey() {
-        return "%s:%s@%s_%s".formatted(userId, scene, ip, deviceId);
+        return "%s:%s@%s_%s".formatted(userId, scene, ip == null ? WindConstants.UNKNOWN : ip, deviceId);
     }
 
     /**
@@ -46,7 +46,6 @@ public record MultiFactorAuthenticationOwnerKey(@NotNull Serializable userId, @N
         return MultiFactorAuthenticationOwnerKey.builder()
                 .userId(userId)
                 .scene(scene)
-                .ip(WindTracer.TRACER.getContextVariable(HTTP_REQUEST_IP_ATTRIBUTE_NAME))
                 .deviceId(WindTracer.TRACER.getContextVariable(HTTP_REQUEST_CLIENT_ID_HEADER_NAME))
                 .build();
     }
