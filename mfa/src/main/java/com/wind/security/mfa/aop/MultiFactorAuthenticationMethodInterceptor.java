@@ -63,8 +63,8 @@ public class MultiFactorAuthenticationMethodInterceptor implements MethodInterce
             if (!authenticationStateManager.isAuthenticated(ownerKey)) {
                 String code = request.getHeader(MFA_CODE_HEADER_NAME);
                 String mfaType = request.getHeader(MFA_TYPE_HEADER_NAME);
-                AssertUtils.hasText(code, "maf authentication code must not empty");
-                AssertUtils.hasText(mfaType, "maf authentication type must not empty");
+                AssertUtils.hasText(code, "mfa authentication code must not empty");
+                AssertUtils.hasText(mfaType, "mfa authentication type must not empty");
                 MultiFactorAuthenticationRequest fasAuthenticationRequest = MultiFactorAuthenticationRequest.builder()
                         .userId(userId)
                         .code(code)
